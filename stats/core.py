@@ -1,6 +1,7 @@
 #
 # core.py
 #
+# Copyright (C) 2012 Tydus Ken <Tydus@Tydus.org>
 # Copyright (C) 2009 Ian Martin <ianmartin@cantab.net>
 # Copyright (C) 2008 Damien Churchill <damoxc@gmail.com>
 # Copyright (C) 2008 Martijn Voncken <mvoncken@gmail.com>
@@ -229,6 +230,10 @@ class Core(CorePluginBase):
             "total_payload_upload": status.total_payload_upload,
             "total_payload_download": status.total_payload_download
         }
+
+    @export
+    def get_both_totals(self):
+        return (get_session_totals(),get_totals())
 
     @export
     def set_config(self, config):

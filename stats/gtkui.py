@@ -1,6 +1,8 @@
 #
 # gtkui.py
 #
+# Copyright (C) 2012 Tydus Ken <Tydus@Tydus.org>
+# Copyright (C) 2009 Szentandrasi Istvan <szentandrasii@gmail.com>
 # Copyright (C) 2009 Ian Martin <ianmartin@cantab.net>
 # Copyright (C) 2008 Martijn Voncken <mvoncken@gmail.com>
 #
@@ -243,11 +245,32 @@ class GtkUI(GtkPluginBase):
         self.torrent_details = component.get('TorrentDetails')
         self.torrent_details.add_tab(self.graphs_tab)
 
+        self.status_item = component.get("StatusBar").add_item(
+                image = get_resource("totaltraffic16.png"),
+                text="",
+                callback=self._on_status_item_clicked,
+                tooltip="Session Downloaded(Total Down)/Session uploaded(Total up)")
+
     def disable(self):
         component.get("Preferences").remove_page("Stats")
         component.get("PluginManager").deregister_hook("on_apply_prefs", self.on_apply_prefs)
         component.get("PluginManager").deregister_hook("on_show_prefs", self.on_show_prefs)
         self.torrent_details.remove_tab(self.graphs_tab.get_name())
+
+        component.get("StatusBar").remove_item(self.status_item)
+        del self.status_item
+
+    def update(self):
+        def cb_get_status(st):
+            fsize=lambda x,y:deluge.common.fsize(x[y])
+            format_str=lambda x:"%s/%s(%s/%s)"%(
+                            fsize(x,'total_download'),
+                            fsize(x,'total_upload'),
+                            fsize(x,'total_payload_download'),
+                            fsize(x,'total_payload_upload'),
+                        )
+            self.status_item.set_text("S: %s T: %s"%map(format_str,st))
+        client.stats.get_both_totals().addCallback(cb_get_status)
 
     def on_apply_prefs(self):
         log.debug("applying prefs for Stats")
