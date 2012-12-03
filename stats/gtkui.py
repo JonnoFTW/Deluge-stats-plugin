@@ -248,7 +248,6 @@ class GtkUI(GtkPluginBase):
         self.status_item = component.get("StatusBar").add_item(
                 image = common.get_resource("totaltraffic16.png"),
                 text="",
-                callback=self._on_status_item_clicked,
                 tooltip="Session Downloaded(Total Down)/Session uploaded(Total up)")
 
     def disable(self):
