@@ -268,7 +268,7 @@ class GtkUI(GtkPluginBase):
                             fsize(x,'total_payload_download'),
                             fsize(x,'total_payload_upload'),
                         )
-            self.status_item.set_text("S: %s T: %s"%map(format_str,st))
+            self.status_item.set_text("S: %s T: %s"%tuple(map(format_str,st)))
         client.stats.get_both_totals().addCallback(cb_get_status)
 
     def on_apply_prefs(self):
