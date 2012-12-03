@@ -1,5 +1,6 @@
 #
 # setup.py
+# Copyright (C) 2012 Tydus Ken <Tydus@Tydus.org>
 # Copyright (C) 2009 Ian Martin <ianmartin@cantab.net>
 # Copyright (C) 2008 Martijn Voncken <mvoncken@gmail.com>
 #
@@ -39,7 +40,7 @@ from setuptools import setup
 __plugin_name__ = "Stats"
 __author__ = "Ian Martin"
 __author_email__ = "ianmartin@cantab.net"
-__version__ = "0.3.2"
+__version__ = "0.4.0"
 __url__ = "http://deluge-torrent.org"
 __license__ = "GPLv3"
 __description__ = "Display stats graphs"
