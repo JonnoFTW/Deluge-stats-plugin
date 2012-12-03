@@ -233,7 +233,7 @@ class Core(CorePluginBase):
 
     @export
     def get_both_totals(self):
-        return (get_session_totals(),get_totals())
+        return (self.get_session_totals(),self.get_totals())
 
     @export
     def set_config(self, config):
