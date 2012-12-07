@@ -56,6 +56,7 @@ DEFAULT_CONF = { 'version': 1,
                  'colors' :{
                  'bandwidth_graph': {'upload_rate': str(gtk.gdk.Color("blue")),
                                      'download_rate': str(gtk.gdk.Color("green")),
+                                     'total_rate': str(gtk.gdk.Color("red")),
                                     },
                  'connections_graph': { 'dht_nodes': str(gtk.gdk.Color("orange")),
                                         'dht_cache_nodes': str(gtk.gdk.Color("blue")),
@@ -169,6 +170,8 @@ class GraphsTab(Tab):
                             color=gtk_to_graph_color(colors['download_rate']))
         self.graph.add_stat('upload_rate', label='Upload Rate',
                             color=gtk_to_graph_color(colors['upload_rate']))
+        self.graph.add_stat('total_rate', label='Total Rate',
+                            color=gtk_to_graph_color(colors['total_rate']))
         self.graph.set_left_axis(formatter=fspeed, min=10240,
                                  formatter_scale=graph.size_formatter_scale)
 

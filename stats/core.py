@@ -100,6 +100,7 @@ class Core(CorePluginBase):
         self.add_stats(
             'upload_rate',
             'download_rate',
+            'total_rate',
             'num_connections',
             'dht_nodes',
             'dht_cache_nodes',
@@ -143,6 +144,7 @@ class Core(CorePluginBase):
                 except AttributeError:
                     pass
             stats["num_connections"]  = self.core.get_num_connections()
+            stats["total_rate"] = stats["download_rate"] + stats["upload_rate"]
             stats.update(self.core.get_config_values(["max_download",
                                                       "max_upload",
                                                       "max_num_connections"]))
