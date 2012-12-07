@@ -234,10 +234,24 @@ class GraphsTab(Tab):
             self.update()
         return True
 
+def fix_config(config,defaults):
+    "Fix missing values from config file with defaults"
+    if isinstance(defaults,dict):
+        for k,v in defaults.items():
+            if not config.has_key(k):
+                config[k]=v
+            else:
+                fix_config(config[k],defaults[k])
+
 class GtkUI(GtkPluginBase):
     def enable(self):
         log.debug("Stats plugin enable called")
         self.config = deluge.configmanager.ConfigManager("stats.gtkui.conf", DEFAULT_CONF)
+
+        # Fix missing config for backward compatibility
+        fix_config(self.config,DEFAULT_CONF)
+        self.config.save()
+
         self.glade = XML(common.get_resource("config.glade"))
         component.get("Preferences").add_page("Stats", self.glade.get_widget("prefs_box"))
         component.get("PluginManager").register_hook("on_apply_prefs", self.on_apply_prefs)
